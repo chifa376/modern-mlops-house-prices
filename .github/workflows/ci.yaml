@@ -50,11 +50,13 @@ jobs:
       - name: Scan API image
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-            aquasec/trivy:0.56.2 image --severity HIGH,CRITICAL --ignore-unfixed \
+            -v "$PWD/monitoring/trivy-secret.yaml:/etc/trivy-secret.yaml:ro" \
+            aquasec/trivy:0.56.2 image --timeout 15m --secret-config /etc/trivy-secret.yaml --severity HIGH,CRITICAL --ignore-unfixed \
             --exit-code 1 modern-mlops-api:ci
 
       - name: Scan pipeline image (report only)
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-            aquasec/trivy:0.56.2 image --severity HIGH,CRITICAL --ignore-unfixed \
+            -v "$PWD/monitoring/trivy-secret.yaml:/etc/trivy-secret.yaml:ro" \
+            aquasec/trivy:0.56.2 image --timeout 15m --secret-config /etc/trivy-secret.yaml --severity HIGH,CRITICAL --ignore-unfixed \
             --exit-code 0 modern-mlops-pipeline:ci

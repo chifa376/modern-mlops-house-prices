@@ -33,4 +33,6 @@ ENV PATH="/app/.venv/bin:${PATH}" \
     PROJECT_ROOT=/app \
     DAGSTER_HOME=/opt/dagster/home
 
+RUN /usr/local/bin/python -m pip install --no-cache-dir --upgrade "setuptools==84.2.1"
+
 USER app
