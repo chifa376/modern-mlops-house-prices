@@ -188,14 +188,16 @@ def train_candidate(alpha: float = settings.RIDGE_ALPHA) -> TrainingResult:
 
         # 4. Save the model, its input signature and an input example.
         example = X_train.head(3)
-        mlflow.sklearn.log_model(
+        model_info = mlflow.sklearn.log_model(
             sk_model=model,
-            artifact_path="model",
+            serialization_format="skops",
+            skops_trusted_types=["numpy.dtype"],
+            name="model",
             signature=infer_signature(example, model.predict(example)),
             input_example=example,
         )
         registered = mlflow.register_model(
-            f"runs:/{run.info.run_id}/model",
+            model_info.model_uri,
             settings.MODEL_NAME,
         )
         version = str(registered.version)

@@ -3,13 +3,14 @@
 from datetime import timedelta
 
 import pandas as pd
-from feast import Entity, FeatureStore, FeatureView, Field, FileSource
+from feast import Entity, FeatureStore, FeatureView, Field, FileSource, ValueType
 from feast.types import Float64
 
 from mlops import settings
 
 house = Entity(
     name="house",
+    value_type=ValueType.INT64,
     join_keys=[settings.ENTITY_KEY],
     description="One house sale in the Ames housing dataset.",
 )
