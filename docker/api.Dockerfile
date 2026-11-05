@@ -24,6 +24,8 @@ ENV PATH="/app/.venv/bin:${PATH}" \
     PYTHONUNBUFFERED=1 \
     PROJECT_ROOT=/app
 
+RUN /usr/local/bin/python -m pip install --no-cache-dir --upgrade "setuptools==84.2.1"
+
 USER app
 EXPOSE 8000
 
